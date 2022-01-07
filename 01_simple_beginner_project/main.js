@@ -5,7 +5,17 @@ const app = new Vue({
         description: 'A pair of warm, and fuzzy socks',
         image: 'assets/vmSocks-green-onWhite.jpg',
         inStock: true,
-        details: ["80% cotton", "20% polyester", "Gender-Neutral"]
+        details: ["80% cotton", "20% polyester", "Gender-Neutral"],
+        variants: [
+            {
+                variantId: 2234,
+                variantColor: "green"
+            },
+            {
+                variantId: 2235,
+                variantColor: "blue"
+            }
+        ],
     }
 });
 
