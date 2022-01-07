@@ -16,7 +16,7 @@ Vue.component("product", {
     props: {
         premium: {
             type: Boolean,
-            required: true
+            required: false
         }
     },
     template: `
@@ -44,8 +44,6 @@ Vue.component("product", {
                 </div>
     
                 <button v-on:click="addToCart" :disabled="!inStock" :class="{ disabledButton: !inStock }">Add to Cart</button>
-    
-                <div class="cart">Cart({{ cart }})</div>
 
             </div>
         </div>
@@ -71,13 +69,12 @@ Vue.component("product", {
                     variantQuantity: 0
                 }
             ],
-            cart: 0,
             onSale: true
         }
     },
     methods: {
         addToCart() {
-            this.cart++;
+            this.$emit("add-to-cart", this.variants[this.selectedVariant].variantId);
         },
         updateProduct(index) {
             this.selectedVariant = index;
@@ -113,7 +110,13 @@ Vue.component("product", {
 const app = new Vue({
     el: '#app',
     data: {
-        premium: true
+        premium: true,
+        cart: []
+    },
+    methods: {
+        updateCart(id) {
+            this.cart.push(id);
+        },
     }
 });
 

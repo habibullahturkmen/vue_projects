@@ -12,9 +12,10 @@
 <div class="nav-bar"></div>
 
 <div id="app">
-
-    <product :premium="premium"></product>
-    <product></product>
+    
+    <div class="cart">Cart({{ cart.length }})</div>
+    <product :premium="premium" @add-to-cart="updateCart"></product>
+    <product @add-to-cart="updateCart"></product>
 
 </div>
 
