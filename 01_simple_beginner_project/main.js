@@ -1,4 +1,18 @@
-Vue.component('product', {
+Vue.component('product-details', {
+    props: {
+        details: {
+            type: Array,
+            required: true
+        }
+    },
+    template: `
+        <ul>
+            <li v-for="detail in details">{{ detail }}</li>
+        </ul>
+    `
+});
+
+Vue.component("product", {
     props: {
         premium: {
             type: Boolean,
@@ -21,9 +35,9 @@ Vue.component('product', {
                 <p v-else>{{ sale }}</p>
     
                 <p>Shipping: {{ shipping }}</p>
-    
-                <li v-for="detail in details">{{ detail }}</li>
-    
+        
+                <product-details :details="details"></product-details>
+
                 <div v-for="(variant, index) in variants" v-bind:key="variant.variantId"
                      class="color-box" v-bind:style="{ backgroundColor: variant.variantColor }"
                      v-on:mouseover="updateProduct(index)">
@@ -38,12 +52,10 @@ Vue.component('product', {
     `,
     data() {
         return {
-            brand: 'Vue Mastery',
-            product: 'Socks',
-            description: 'A pair of warm, and fuzzy socks',
-            // image: 'assets/vmSocks-green-onWhite.jpg',
+            brand: "Vue Mastery",
+            product: "Socks",
+            description: "A pair of warm, and fuzzy socks",
             selectedVariant: 0,
-            // inStock: false,
             details: ["80% cotton", "20% polyester", "Gender-Neutral"],
             variants: [
                 {
@@ -92,9 +104,8 @@ Vue.component('product', {
         shipping() {
             if (this.premium) {
                 return "Free";
-            } else {
-                return 2.99;
             }
+            return 2.99;
         }
     }
 });
