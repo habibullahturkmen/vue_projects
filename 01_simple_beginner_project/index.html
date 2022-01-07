@@ -23,8 +23,10 @@
             <p v-show="inStock">In Stock</p>
             <li v-for="detail in details">{{ detail }}</li>
             <div v-for="variant in variants" v-bind:key="variant.variantId">
-                <p>{{ variant.variantColor }}</p>
+                <p v-on:mouseover="updateProduct(variant.variantImage)">{{ variant.variantColor }}</p>
             </div>
+            <button v-on:click="addToCart">Add to Cart</button>
+            <div class="cart">Cart({{ cart }})</div>
         </div>
     </div>
 
