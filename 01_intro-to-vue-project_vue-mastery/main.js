@@ -22,9 +22,7 @@ Vue.component("product", {
                 <p v-if="onSale">{{ sale }}</p>
                 <p v-else>{{ sale }}</p>
     
-                <p>Shipping: {{ shipping }}</p>
-        
-                <product-details :details="details"></product-details>
+                <info-tabs :shipping="shipping" :details="details"></info-tabs>
 
                 <div v-for="(variant, index) in variants" v-bind:key="variant.variantId"
                      class="color-box" v-bind:style="{ backgroundColor: variant.variantColor }"
@@ -74,7 +72,6 @@ Vue.component("product", {
         },
         updateProduct(index) {
             this.selectedVariant = index;
-            console.log(index);
         }
     },
     computed: {
@@ -106,20 +103,6 @@ Vue.component("product", {
             this.reviews.push(productReview);
         });
     }
-});
-
-Vue.component("product-details", {
-    props: {
-        details: {
-            type: Array,
-            required: true
-        }
-    },
-    template: `
-        <ul>
-            <li v-for="detail in details">{{ detail }}</li>
-        </ul>
-    `
 });
 
 Vue.component("product-review", {
@@ -195,6 +178,45 @@ Vue.component("product-review", {
                 if (!this.rating) this.errors.push("Rating required");
                 if (!this.recommend) this.errors.push("Recommend required");
             }
+        }
+    }
+});
+
+Vue.component("info-tabs", {
+    props: {
+        details: {
+            type: Array,
+            required: true
+        },
+        shipping: {
+            required: true
+        }
+    },
+    template: `
+        <div>
+            <ul>
+            <span class="tab"
+                :class="{ activeTab: selectedTab === tab }"
+                v-for="(tab, index) in tabs" 
+                :key="tab"
+                @click="selectedTab = tab"
+            >{{ tab }}</span>
+            </ul>
+                
+            <p v-show="selectedTab === 'Shipping'">{{ shipping }}</p>
+            
+            <div v-show="selectedTab === 'Details'">
+                <ul>
+                    <li v-for="detail in details">{{ detail }}</li>
+                </ul>
+            </div>
+            
+        </div>
+    `,
+    data() {
+        return {
+            tabs: ["Shipping", "Details"],
+            selectedTab: "Shipping"
         }
     }
 });
